@@ -1,32 +1,43 @@
-import { Button, Image, StyleSheet, Text, View } from 'react-native'
+import { Button, Image, StyleSheet, Text, TouchableNativeFeedback, View } from 'react-native'
 import React from 'react'
 import { TouchableOpacity } from 'react-native-gesture-handler'
+
+import { Platform } from 'react-native'
 
 import MainButton from '../MainButton'
 
 const ProductItem = (props) => {
+
+
+    let TouchableButton = TouchableOpacity
+
+        // if(Platform.OS === "android"){
+        //         TouchableButton = TouchableNativeFeedback
+        // }
+
+
     return (
-        <View style={styles.product}>
-            <Image style={styles.image} source={{ uri: props.image }} />
 
-            <View style={styles.details}>
-                <Text style={styles.title}>{props.title}</Text>
-                <Text style={styles.price}>{props.price}</Text>
+        <TouchableButton  activeOpacity={0.8} onPress={props.onSelectCard} useForeground>
+
+            <View style={styles.product}>
+                <Image style={styles.image} source={{ uri: props.image }} />
+
+                <View style={styles.details}>
+                    <Text style={styles.title}>{props.title}</Text>
+                    <Text style={styles.price}>$ {props.price}</Text>
+                </View>
+
+                <View style={styles.row}>
+
+                    {props.children}
+
+                    
+                </View>
             </View>
 
-            <View style={styles.row}>
+        </TouchableButton>
 
-
-
-                <MainButton style={{backgroundColor:'green'}}>
-                    Details Screen
-                </MainButton>
-
-                <MainButton style={{backgroundColor:'orange'}}>
-                    Add to Cart
-                </MainButton>
-            </View>
-        </View>
     )
 }
 
@@ -60,12 +71,16 @@ const styles = StyleSheet.create({
 
     title: {
         fontSize: 20,
-        color: 'black'
+        color: 'black',
+        fontFamily:'Sofia-Regular'
 
     },
 
     price: {
         fontSize: 14,
+        fontFamily:'Quando-Regular',
+        marginVertical:5,
+        marginBottom:5
 
     },
 
@@ -85,7 +100,8 @@ const styles = StyleSheet.create({
 
     bt1Text: {
         alignItems: 'center',
-        justifyContent: 'center'
+        justifyContent: 'center',
+        justifyContent:'BebasNeue-Regular'
     },
 
     btn2: {

@@ -27,7 +27,8 @@ const styles = StyleSheet.create({
 
 ButtonText: {
     color:'black',
-    textAlign:'center'
+    textAlign:'center',
+    fontFamily:'InriaSans-Light'
 }
 
 })

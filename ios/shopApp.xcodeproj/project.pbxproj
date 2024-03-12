@@ -14,6 +14,17 @@
 		13B07FC11A68108700A75B9A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
 		7699B88040F8A987B510C191 /* libPods-shopApp-shopAppTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 19F6CBCC0A4E27FBF8BF4A61 /* libPods-shopApp-shopAppTests.a */; };
 		81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */; };
+		BFC0EEB77B4F431C8F0A9E06 /* BebasNeue-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = C23665728F134316B0916856 /* BebasNeue-Regular.ttf */; };
+		3CD3A32300CE462AA97D9782 /* InriaSans-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 156D9E5253924613A5E8321B /* InriaSans-Bold.ttf */; };
+		B03A7D81C6424E46B4147CE7 /* InriaSans-BoldItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 1E2F150471CE47708536D0F2 /* InriaSans-BoldItalic.ttf */; };
+		4FF39981466E4435873DABDA /* InriaSans-Italic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = E4D08AA5F23342F6BD8CA48B /* InriaSans-Italic.ttf */; };
+		163D30E9E44D40EF99AFC8BB /* InriaSans-Light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 3D39F52F69AE4186A4E600F0 /* InriaSans-Light.ttf */; };
+		59DABD5FDF434C3FB0924A13 /* InriaSans-LightItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 0AE8DD7534FD4ABEAE123C01 /* InriaSans-LightItalic.ttf */; };
+		B024C7A9E6B04295B0D364F1 /* InriaSans-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 6E9F7586EB6E4DA3A8953A59 /* InriaSans-Regular.ttf */; };
+		B8762493397647DDBBC5D11D /* Quando-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 46A79E31D09E42428936CC57 /* Quando-Regular.ttf */; };
+		FCBE6DA860F6429AA0A165EB /* Sofia-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 299068AF2BEA4270AEF1D0E5 /* Sofia-Regular.ttf */; };
+		427D728A0C304D93A3325DC8 /* OFL.txt in Resources */ = {isa = PBXBuildFile; fileRef = AA1D349F16544E7296EE2190 /* OFL.txt */; };
+		CC9EAF8CD5974CFA831120BD /* Bebas_Neue,Inria_Sans,Quando,Sofia.zip in Resources */ = {isa = PBXBuildFile; fileRef = 757E764903044B678274B41B /* Bebas_Neue,Inria_Sans,Quando,Sofia.zip */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -44,6 +55,17 @@
 		81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = LaunchScreen.storyboard; path = shopApp/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		89C6BE57DB24E9ADA2F236DE /* Pods-shopApp-shopAppTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-shopApp-shopAppTests.release.xcconfig"; path = "Target Support Files/Pods-shopApp-shopAppTests/Pods-shopApp-shopAppTests.release.xcconfig"; sourceTree = "<group>"; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
+		C23665728F134316B0916856 /* BebasNeue-Regular.ttf */ = {isa = PBXFileReference; name = "BebasNeue-Regular.ttf"; path = "../assets/fonts/BebasNeue-Regular.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		156D9E5253924613A5E8321B /* InriaSans-Bold.ttf */ = {isa = PBXFileReference; name = "InriaSans-Bold.ttf"; path = "../assets/fonts/Bebas_Neue,Inria_Sans,Quando,Sofia/Inria_Sans/InriaSans-Bold.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		1E2F150471CE47708536D0F2 /* InriaSans-BoldItalic.ttf */ = {isa = PBXFileReference; name = "InriaSans-BoldItalic.ttf"; path = "../assets/fonts/Bebas_Neue,Inria_Sans,Quando,Sofia/Inria_Sans/InriaSans-BoldItalic.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		E4D08AA5F23342F6BD8CA48B /* InriaSans-Italic.ttf */ = {isa = PBXFileReference; name = "InriaSans-Italic.ttf"; path = "../assets/fonts/Bebas_Neue,Inria_Sans,Quando,Sofia/Inria_Sans/InriaSans-Italic.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		3D39F52F69AE4186A4E600F0 /* InriaSans-Light.ttf */ = {isa = PBXFileReference; name = "InriaSans-Light.ttf"; path = "../assets/fonts/Bebas_Neue,Inria_Sans,Quando,Sofia/Inria_Sans/InriaSans-Light.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		0AE8DD7534FD4ABEAE123C01 /* InriaSans-LightItalic.ttf */ = {isa = PBXFileReference; name = "InriaSans-LightItalic.ttf"; path = "../assets/fonts/Bebas_Neue,Inria_Sans,Quando,Sofia/Inria_Sans/InriaSans-LightItalic.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		6E9F7586EB6E4DA3A8953A59 /* InriaSans-Regular.ttf */ = {isa = PBXFileReference; name = "InriaSans-Regular.ttf"; path = "../assets/fonts/Bebas_Neue,Inria_Sans,Quando,Sofia/Inria_Sans/InriaSans-Regular.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		46A79E31D09E42428936CC57 /* Quando-Regular.ttf */ = {isa = PBXFileReference; name = "Quando-Regular.ttf"; path = "../assets/fonts/Bebas_Neue,Inria_Sans,Quando,Sofia/Quando/Quando-Regular.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		299068AF2BEA4270AEF1D0E5 /* Sofia-Regular.ttf */ = {isa = PBXFileReference; name = "Sofia-Regular.ttf"; path = "../assets/fonts/Bebas_Neue,Inria_Sans,Quando,Sofia/Sofia/Sofia-Regular.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		AA1D349F16544E7296EE2190 /* OFL.txt */ = {isa = PBXFileReference; name = "OFL.txt"; path = "../assets/fonts/Bebas_Neue,Inria_Sans,Quando,Sofia/Bebas_Neue/OFL.txt"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		757E764903044B678274B41B /* Bebas_Neue,Inria_Sans,Quando,Sofia.zip */ = {isa = PBXFileReference; name = "Bebas_Neue,Inria_Sans,Quando,Sofia.zip"; path = "../assets/fonts/Bebas_Neue,Inria_Sans,Quando,Sofia.zip"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -122,6 +144,7 @@
 				83CBBA001A601CBA00E9B192 /* Products */,
 				2D16E6871FA4F8E400B85C8A /* Frameworks */,
 				BBD78D7AC51CEA395F1C20DB /* Pods */,
+				080BD20566FC487699407841 /* Resources */,
 			);
 			indentWidth = 2;
 			sourceTree = "<group>";
@@ -147,6 +170,25 @@
 			);
 			path = Pods;
 			sourceTree = "<group>";
+		};
+		080BD20566FC487699407841 /* Resources */ = {
+			isa = "PBXGroup";
+			children = (
+				C23665728F134316B0916856 /* BebasNeue-Regular.ttf */,
+				156D9E5253924613A5E8321B /* InriaSans-Bold.ttf */,
+				1E2F150471CE47708536D0F2 /* InriaSans-BoldItalic.ttf */,
+				E4D08AA5F23342F6BD8CA48B /* InriaSans-Italic.ttf */,
+				3D39F52F69AE4186A4E600F0 /* InriaSans-Light.ttf */,
+				0AE8DD7534FD4ABEAE123C01 /* InriaSans-LightItalic.ttf */,
+				6E9F7586EB6E4DA3A8953A59 /* InriaSans-Regular.ttf */,
+				46A79E31D09E42428936CC57 /* Quando-Regular.ttf */,
+				299068AF2BEA4270AEF1D0E5 /* Sofia-Regular.ttf */,
+				AA1D349F16544E7296EE2190 /* OFL.txt */,
+				757E764903044B678274B41B /* Bebas_Neue,Inria_Sans,Quando,Sofia.zip */,
+			);
+			name = Resources;
+			sourceTree = "<group>";
+			path = "";
 		};
 /* End PBXGroup section */
 
@@ -243,6 +285,17 @@
 			files = (
 				81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */,
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
+				BFC0EEB77B4F431C8F0A9E06 /* BebasNeue-Regular.ttf in Resources */,
+				3CD3A32300CE462AA97D9782 /* InriaSans-Bold.ttf in Resources */,
+				B03A7D81C6424E46B4147CE7 /* InriaSans-BoldItalic.ttf in Resources */,
+				4FF39981466E4435873DABDA /* InriaSans-Italic.ttf in Resources */,
+				163D30E9E44D40EF99AFC8BB /* InriaSans-Light.ttf in Resources */,
+				59DABD5FDF434C3FB0924A13 /* InriaSans-LightItalic.ttf in Resources */,
+				B024C7A9E6B04295B0D364F1 /* InriaSans-Regular.ttf in Resources */,
+				B8762493397647DDBBC5D11D /* Quando-Regular.ttf in Resources */,
+				FCBE6DA860F6429AA0A165EB /* Sofia-Regular.ttf in Resources */,
+				427D728A0C304D93A3325DC8 /* OFL.txt in Resources */,
+				CC9EAF8CD5974CFA831120BD /* Bebas_Neue,Inria_Sans,Quando,Sofia.zip in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
