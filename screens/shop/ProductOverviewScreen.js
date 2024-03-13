@@ -12,7 +12,7 @@ import * as cartActions from '../../store/actions/cart'
 // import HeaderButton from '../../UI/HeaderButton'
 
 import { HeaderButtons, Item } from 'react-navigation-header-buttons';
-import CustomHeaderButton from '../../components/UI/CustomHeaderButton'
+import CustomHeaderButton from '../../components/UI/HeaderButton'
 
 import CartScreens from './CartScreens'
 
@@ -41,14 +41,14 @@ const ProductOverviewScreen = (props) => {
             headerLeft: () => {
                 return (
                     <HeaderButtons HeaderButtonComponent={CustomHeaderButton}>
-                        <Item iconName='bars' title='bars' onPress={() => props.navigation.toggleDrawer()} />
+                        <Item iconName='bars' title='bars' onPress={() => props.navigation.toggleDrawer()} style={{marginLeft:15}} />
                     </HeaderButtons>
                 )
             },
             headerRight: () => {
                 return (
                     <HeaderButtons HeaderButtonComponent={CustomHeaderButton}>
-                        <Item iconName='shopping-cart' title="shoping cart" onPress={() => props.navigation.navigate('Add To cart')} />
+                        <Item iconName='shopping-cart' title="shoping cart" onPress={() => props.navigation.navigate('Add To cart')} style={{marginRight:12}}/>
                     </HeaderButtons>
                 )
             }

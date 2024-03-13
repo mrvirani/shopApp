@@ -80,7 +80,7 @@ const OrderNavigator = () => {
 
 const AdminNavigator = () => {
     return (
-        <Stack.Navigator>
+        <Stack.Navigator screenOptions={DefaultStackNavigatorOptionsStyle}>
             <Stack.Screen name="Your Product" component={UserProductScreen} />
             <Stack.Screen name="Edit Product" component={EditProductScreen} />
         </Stack.Navigator>
@@ -94,7 +94,7 @@ const MainDrawer = () => {
 
     return(
 
-    <Drawer.Navigator options={DefaultStackNavigatorOptionsStyle}>
+    <Drawer.Navigator screenOptions={DefaultStackNavigatorOptionsStyle}>
         <Drawer.Screen name="Home" component={ProductNavigator} options={{
             title:'OverView Screen',
             // headerStyle:{
@@ -104,8 +104,8 @@ const MainDrawer = () => {
             headerShown:false
             
         }}/>
-        <Drawer.Screen name="Your Orders" component={OrderNavigator} />
-        <Drawer.Screen name="Admin" component={AdminNavigator} />
+        <Drawer.Screen name="Your Orders" component={OrderNavigator}  options={{headerShown:false}}/>
+        <Drawer.Screen name="Admin" component={AdminNavigator} options={{headerShown:false}} />
     </Drawer.Navigator>
 
     )

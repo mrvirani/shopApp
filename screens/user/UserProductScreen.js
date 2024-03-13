@@ -1,22 +1,49 @@
 import { StyleSheet, Text, View } from 'react-native'
-import React from 'react'
+import React, { useEffect } from 'react'
 import { FlatList } from 'react-native-gesture-handler'
 import { useDispatch, useSelector } from 'react-redux'
 import ProductItem from '../../components/shop/ProductItem'
 import MainButton from '../../components/MainButton'
 
 import * as productsActions from '../../store/actions/products'
+import { HeaderButtons, Item } from 'react-navigation-header-buttons';
+import CustomHeaderButton from '../../components/UI/HeaderButton'
 
 const UserProductScreen = (props) => {
+  
+
+  useEffect(() => {
+
+    props.navigation.setOptions({
+      headerTitle: 'Your Product',
+      headerLeft:()=>(
+        <HeaderButtons HeaderButtonComponent={CustomHeaderButton}>
+        <Item iconName='bars' title='bars' onPress={()=>props.navigation.toggleDrawer()} style={{marginLeft:20}}/>
+      </HeaderButtons>
+    
+      )
+      ,
+      headerRight: () => (
+        <HeaderButtons HeaderButtonComponent={CustomHeaderButton}>
+          <Item iconName='edit' title='edit Button' onPress={() => {props.navigation.navigate('Edit Product') }} style={{marginRight:12}} />
+        </HeaderButtons>
+      ),
+      headerStyle: {
+        backgroundColor: '#FF8E8F'
+      },
+      headerTintColor: 'white'
+    })
+
+  }, [])
 
   const userProducts = useSelector(state => state.products.userProducts)
 
 
-  const editProductHandler = (id) =>{
-    props.navigation.navigate('Edit Product',{ productId: id} )
+  const editProductHandler = (id) => {
+    props.navigation.navigate('Edit Product', { productId: id })
   }
 
-    const dispatch = useDispatch()
+  const dispatch = useDispatch()
 
 
   return (
@@ -25,27 +52,29 @@ const UserProductScreen = (props) => {
         data={userProducts}
         renderItem={itemData =>
 
-          <ProductItem 
+          <ProductItem
             image={itemData.item.imageUrl}
             title={itemData.item.title}
             price={itemData.item.price}
-            onSelectCart={()=>{editProductHandler(itemData.item.id)}}
+            onSelectCard={() => { editProductHandler(itemData.item.id) }}
 
           >
-            <MainButton style={{ backgroundColor: 'green' }} onPress={()=>{editProductHandler(itemData.item.id)}} >
+            <MainButton style={{ backgroundColor: 'green' }} onPress={() => { editProductHandler(itemData.item.id) }} >
               Edit
             </MainButton>
 
-            <MainButton style={{ backgroundColor: 'orange' }} onPress={()=>{dispatch(productsActions.deleteProduct(itemData.item.id))}}>
+            <MainButton style={{ backgroundColor: 'orange' }} onPress={() => { dispatch(productsActions.deleteProduct(itemData.item.id)) }}>
               Delete Product
             </MainButton>
 
           </ProductItem>
-        } 
+        }
       />
     </View>
   )
 }
+
+
 
 const styles = StyleSheet.create({})
 
