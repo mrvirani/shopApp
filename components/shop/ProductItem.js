@@ -1,30 +1,64 @@
 import { Button, Image, StyleSheet, Text, TouchableNativeFeedback, View } from 'react-native'
-import React from 'react'
+import React, { useState } from 'react'
 import { TouchableOpacity } from 'react-native-gesture-handler'
 
 import { Platform } from 'react-native'
 
 import MainButton from '../MainButton'
+import ImageItem from '../UI/ImageItem'
 
 const ProductItem = (props) => {
 
 
     let TouchableButton = TouchableOpacity
 
-        // if(Platform.OS === "android"){
-        //         TouchableButton = TouchableNativeFeedback
-        // }
+    // if(Platform.OS === "android"){
+    //         TouchableButton = TouchableNativeFeedback
+    // }
+
+
+    const defaultImage = 'https://www.shutterstock.com/shutterstock/photos/1323007565/display_1500/stock-vector-colorful-gulaal-powder-color-indian-festival-for-happy-holi-card-with-gold-patterned-and-crystals-1323007565.jpg'
+
+    const [defaultimg, setDefaultImage] = useState(props.image)
+
+    const handleError = e => {
+        // e.stopPropagation()
+        setDefaultImage(defaultImage)
+    }
+
+
+
+    //   const [defaultText, setDefaultText] = useState(props.title)
+
+    //   const handleText = e => {
+    //       // e.stopPropagation()
+    //       setDefaultText("hello")
+    //     }
+
+
 
 
     return (
 
-        <TouchableButton  activeOpacity={0.8} onPress={props.onSelectCard} useForeground>
+
+        <TouchableButton activeOpacity={0.8} onPress={props.onSelectCard} useForeground>
+            {/* {console.log(props.image+"checking images")} */}
 
             <View style={styles.product}>
-                <Image style={styles.image} source={{ uri: props.image }} />
+
+                
+
+                <ImageItem style={styles.image}
+
+
+
+                    imagess= {props.image}
+                    // source={{ uri: defaultimg }}
+                    // onError={handleError}
+                />
 
                 <View style={styles.details}>
-                    <Text style={styles.title}>{props.title}</Text>
+                    <Text style={styles.title} >{props.title}</Text>
                     <Text style={styles.price}>$ {props.price}</Text>
                 </View>
 
@@ -32,7 +66,7 @@ const ProductItem = (props) => {
 
                     {props.children}
 
-                    
+
                 </View>
             </View>
 
@@ -72,15 +106,15 @@ const styles = StyleSheet.create({
     title: {
         fontSize: 20,
         color: 'black',
-        fontFamily:'Sofia-Regular'
+        fontFamily: 'Sofia-Regular'
 
     },
 
     price: {
         fontSize: 14,
-        fontFamily:'Quando-Regular',
-        marginVertical:5,
-        marginBottom:5
+        fontFamily: 'Quando-Regular',
+        marginVertical: 5,
+        marginBottom: 5
 
     },
 
@@ -101,7 +135,7 @@ const styles = StyleSheet.create({
     bt1Text: {
         alignItems: 'center',
         justifyContent: 'center',
-        justifyContent:'BebasNeue-Regular'
+        justifyContent: 'BebasNeue-Regular'
     },
 
     btn2: {

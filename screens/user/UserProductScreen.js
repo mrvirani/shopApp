@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View } from 'react-native'
+import { Alert, StyleSheet, Text, View } from 'react-native'
 import React, { useEffect } from 'react'
 import { FlatList } from 'react-native-gesture-handler'
 import { useDispatch, useSelector } from 'react-redux'
@@ -33,17 +33,24 @@ const UserProductScreen = (props) => {
       },
       headerTintColor: 'white'
     })
-
+    
   }, [])
-
+  
   const userProducts = useSelector(state => state.products.userProducts)
-
+  
+  const dispatch = useDispatch()
 
   const editProductHandler = (id) => {
     props.navigation.navigate('Edit Product', { productId: id })
   }
 
-  const dispatch = useDispatch()
+  const deleteProductHandler = (id) => {
+    Alert.alert('Are you sure??', 'Do You really want to delete item?', [
+      {text:'No', style:'default'},
+      {text:'Yes', style:'destructive', onPress:()=>{ dispatch(productsActions.deleteProduct(id)) }} 
+    ])
+  }
+
 
 
   return (
@@ -63,7 +70,7 @@ const UserProductScreen = (props) => {
               Edit
             </MainButton>
 
-            <MainButton style={{ backgroundColor: 'orange' }} onPress={() => { dispatch(productsActions.deleteProduct(itemData.item.id)) }}>
+            <MainButton style={{ backgroundColor: 'orange' }} onPress={() => { deleteProductHandler(itemData.item.id) }}>
               Delete Product
             </MainButton>
 

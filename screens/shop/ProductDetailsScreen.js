@@ -1,5 +1,5 @@
-import { Button, Image, StyleSheet, Text, View } from 'react-native'
-import React, { useEffect } from 'react'
+import { Button, Image, StyleSheet, Text, ToastAndroid, View } from 'react-native'
+import React, { useEffect ,useState} from 'react'
 
 import { useDispatch, useSelector } from 'react-redux'
 import { useRoute } from '@react-navigation/native';
@@ -29,16 +29,20 @@ const ProductDetailsScreen = (props) => {
 
 
 
-  console.log("hi" + selectedProduct.price)
+  // console.log("hi" + selectedProduct.price)
 
+  const defaultImage = 'https://www.shutterstock.com/shutterstock/photos/1323007565/display_1500/stock-vector-colorful-gulaal-powder-color-indian-festival-for-happy-holi-card-with-gold-patterned-and-crystals-1323007565.jpg'
 
+  const [defaultImg, setDefaultImage] = useState(selectedProduct.imageUrl)
 
+  
+ 
   //screenname.navigationOption latest version ma nahi chaltu so useEffect thi navigation.setoption thi header set karvu
   useEffect(() => {
     if (productTitle) {
       props.navigation.setOptions({
         title: productTitle,
-
+ 
         headerRight: () => (
           <HeaderButtons HeaderButtonComponent={CustomHeaderButton}>
             <Item
@@ -61,19 +65,23 @@ const ProductDetailsScreen = (props) => {
 
 
   // console.log(productId)   
+  // const errorImage = { uri: defaultImage };
 
   return (
     <ScrollView>
 
       <View style={{ marginTop: 10 }}>
 
-        <Image style={styles.image} source={{ uri: selectedProduct.imageUrl }} />
+        <Image style={styles.image} source={{ uri: defaultImg}} 
+        // onError={(e)=>{console.log(error)}}
+        onError={()=>setDefaultImage(defaultImage)}
+         />
 
       </View>
 
       <View style={styles.btncontainer}>
         <MainButton style={styles.AddToCartBtn} onPress={() => {
-          dispatch(addToCart(selectedProduct))
+          dispatch(addToCart(selectedProduct),ToastAndroid.showWithGravity('Product is Added in Cart...', ToastAndroid.SHORT, ToastAndroid.BOTTOM))
           // console.log("hello")
         }}>ADD TO CART</MainButton>
 

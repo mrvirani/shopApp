@@ -22,7 +22,7 @@ export default (state = initialState, action) => {
             const productPrice = addedProduct.price
             const productTitle = addedProduct.title
             const productImage = addedProduct.imageUrl
-
+            
             let UpadateOrNewCartItem;
 
 
