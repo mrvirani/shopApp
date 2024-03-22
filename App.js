@@ -1,7 +1,7 @@
 import { StyleSheet, Text, View } from 'react-native'
 import React from 'react'
 
-import { createStore,combineReducers } from 'redux'
+import { createStore,combineReducers, applyMiddleware } from 'redux'
 import { Provider } from 'react-redux'
 
 import productsReducernnn from './store/reducers/products'
@@ -15,13 +15,25 @@ import OrderScreen from './screens/shop/OrderScreen'
 
 import 'react-native-gesture-handler';
 
+import {thunk} from 'redux-thunk' 
+import { StatusBar } from 'react-native'
+// import logger  from 'redux-logger'
+
 const rootReducer = combineReducers({
   products: productsReducernnn,
   cart: cartReducer,
   orders: orderReducer   // this gives us access to the state slice managed by the orders reducer
 });
 
-const store = createStore(rootReducer);
+
+
+
+
+
+const store = createStore(rootReducer, applyMiddleware(thunk));
+
+
+
 
  const  App=()=> {
   return (
@@ -32,6 +44,7 @@ const store = createStore(rootReducer);
           hello 
         </Text>
       </View> */}
+      {/* <StatusBar backgroundColor="#FF8E8F" barStyle="light-content"/> */}
 
       <ShopNavigator/>
     </Provider>

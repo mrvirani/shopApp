@@ -47,7 +47,7 @@ const Input = (props) => {
 
   useEffect(()=>{
     if(inputState.touched){
-
+        
       onInputChange(inputState.value, inputState.isValid )   //onInputeChange is random name 
     }
   },[inputState, onInputChange])

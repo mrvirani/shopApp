@@ -1,6 +1,6 @@
 import PRODUCTS from '../../data/dummy-data'
 import Product from '../../models/product';
-import { CREATE_PRODUCT, DELETE_PRODUCT, UPDATE_PRODUCT } from '../actions/products';
+import { CREATE_PRODUCT, DELETE_PRODUCT, SET_PRODUCT, UPDATE_PRODUCT } from '../actions/products';
 
 const initialState = {
     availableProducts: PRODUCTS,
@@ -10,6 +10,18 @@ const initialState = {
 export default  (state= initialState,action)=> {
    
    switch(action.type){
+
+    case SET_PRODUCT:
+
+
+        return{
+            
+            availableProducts: action.products,
+            userProducts: action.products.filter(prod=> prod.ownerId ==='u1')
+            
+        }
+
+
     case DELETE_PRODUCT: // for delete product we have it delete from userOwerview Screen , userProduct SCrren and also from cart screen (for cart screen we go on cart reducer)
 
         return{
@@ -22,11 +34,11 @@ export default  (state= initialState,action)=> {
         case CREATE_PRODUCT:
 
         const newProduct = new Product(
-            new Date().toString(),
+            action.productData.id,
              'u1', 
              action.productData.title, 
-             action.productData.description,
              action.productData.imageUrl,
+             action.productData.description,
              action.productData.price)
 
         return{
@@ -42,6 +54,8 @@ export default  (state= initialState,action)=> {
 
         const productIndex= state.userProducts.findIndex(prod => prod.id === action.pid)
 
+
+        console.log("jhjhjh"+productIndex)
         const updatedproduct = new Product(
             action.pid,
             state.userProducts[productIndex].ownerId,   //In which place i have use state. somthing then it,s i have place same value as it is(value not changed)
@@ -50,6 +64,7 @@ export default  (state= initialState,action)=> {
             action.productData.description,
             state.userProducts[productIndex].price,  // here i have to take same value as product so we use state. ...
         )
+
 
         const updateUserProduct = [...state.userProducts]  // copy our state's userproduct as an array
         updateUserProduct[productIndex] = updatedproduct  //perticuler index parni product parni item par updated product ne place karshu

@@ -7,6 +7,12 @@ import { Platform } from 'react-native'
 import MainButton from '../MainButton'
 import ImageItem from '../UI/ImageItem'
 
+import FastImage from 'react-native-fast-image'
+import { ActivityIndicator } from 'react-native'
+
+
+
+
 const ProductItem = (props) => {
 
 
@@ -38,6 +44,20 @@ const ProductItem = (props) => {
 
 
 
+    const [imageLoaded, setImageLoaded] = useState(false)
+
+    const handleImageLoad = () => {
+        setImageLoaded(true)
+    }
+
+    
+
+
+    const theamImage = 'https://res.cloudinary.com/dobanpo5b/image/upload/v1710500001/neom-brFQojtwSzE-unsplash_1_sbbfju.jpg'
+
+
+
+
     return (
 
 
@@ -47,15 +67,51 @@ const ProductItem = (props) => {
             <View style={styles.product}>
 
                 
+                    {!imageLoaded && <Image source={{ uri: theamImage }} style={{ width: '100%', height: '60%' }} />}
+                    <Image
+                        source={{ uri: defaultimg }}
+                        style={{width: '100%', height: '60%', display: imageLoaded ? 'flex' : 'none'}}
+                        onError={handleError}
+                        onLoadEnd={handleImageLoad} 
+                    />
+                
 
-                <ImageItem style={styles.image}
+                {/* <View>
+                        {!imageLoaded && <Image source={{uri: theamImage}} />}
+
+                        <Image source={{uri:props.image}}
+                        style={{width:100,height:100,display:imageLoaded?'flex':'none'}}
+                        onLoadEnd={handleImageLoad}/>
+                    
+                    </View> */}
 
 
 
-                    imagess= {props.image}
-                    // source={{ uri: defaultimg }}
-                    // onError={handleError}
-                />
+                {/* <FastImage
+                    style={styles.image}
+                    
+                    
+                    
+                    source={{
+                        uri: props.image,
+                        priority: FastImage.priority.high,
+                    
+                    }}
+                    
+                  resizeMode={FastImage.resizeMode.contain}
+                /> */}
+
+
+                {/* <Image style={styles.image}
+
+
+
+                    // imagess={props.image}
+                source={{ uri: defaultimg }}
+                onError={handleError}
+              //  loadingIndicatorSource={{uri: 'https://res.cloudinary.com/dobanpo5b/image/upload/v1710500001/neom-brFQojtwSzE-unsplash_1_sbbfju.jpg'}}
+                 
+                /> */}
 
                 <View style={styles.details}>
                     <Text style={styles.title} >{props.title}</Text>
@@ -92,7 +148,6 @@ const styles = StyleSheet.create({
     image: {
         width: '100%',
         height: '60%',
-
 
     },
 

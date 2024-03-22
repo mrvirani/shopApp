@@ -3,6 +3,9 @@ import React, { useState } from 'react'
 
 const OrderItems = (props) => {
 
+    console.log(props)
+    
+
     const [showDetails, setShowDetails] = useState(false)
 
     return (

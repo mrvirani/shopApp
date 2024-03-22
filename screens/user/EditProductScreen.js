@@ -1,4 +1,4 @@
-import { Alert, StyleSheet, Text, View } from 'react-native'
+import { ActivityIndicator, Alert, StyleSheet, Text, ToastAndroid, View } from 'react-native'
 import React, { useCallback, useEffect, useLayoutEffect, useReducer, useState } from 'react'
 import { ScrollView, TextInput } from 'react-native-gesture-handler'
 import { HeaderButtons, Item } from 'react-navigation-header-buttons';
@@ -10,11 +10,15 @@ import * as productsActions from '../../store/actions/products'
 // import { Input } from 'react-native-elements';
 
 import Input from '../../components/UI/Input';
+import { color } from 'react-native-elements/dist/helpers';
+
+
 
 
 const FORM_INPUT_UPDATE = 'FORM_INPUT_UPDATE'
 
 const formReducer = (state, action) => {
+
   if (action.type === FORM_INPUT_UPDATE) {
 
     const updateValues = {
@@ -60,6 +64,10 @@ const EditProductScreen = (props) => {
   // console.log(productId)
 
   const prodId = productId
+
+
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState();
 
 
 
@@ -108,38 +116,63 @@ const EditProductScreen = (props) => {
 
   })
 
+
+  useEffect(()=>{
+      if(error){
+        Alert.alert('An Error Occured', error, [{text:'Okay'}])
+      }
+  },[error])
+
+
   //==================================================================
 
-  const submitHandler = useCallback(() => {
+  const submitHandler = useCallback(async () => {
 
-    if (!formState.formIsValid ) {
-      Alert.alert("Wrong Input!!", "Please check all data is correctly fill or not...", [{ text: 'okay' }])
-      return
+    // if (!formState.inputValues.title || !formState.inputValues.imageUrl || !formState.inputValues.description || !formState.inputValues.price) {
+
+    // if (!formState.formIsValid) {
+    //  Alert.alert("Wrong Input!!", "Please check all data is correctly fill or not...", [{ text: 'okay' }])
+    //   return
+    // }
+
+    setError(null)
+    setIsLoading(true)
+
+    try {
+
+      if (editedProducts) {
+        await dispatch(productsActions.updateProduct(
+          productId,
+          formState.inputValues.title,
+          formState.inputValues.description,
+          formState.inputValues.imageUrl)
+
+        )
+        ToastAndroid.showWithGravity('Data SuccessFully Updated!!!',ToastAndroid.SHORT, ToastAndroid.CENTER)
+  
+      }
+      else {
+        await dispatch(productsActions.createProduct(
+          formState.inputValues.title,
+          formState.inputValues.imageUrl,
+          formState.inputValues.description,
+          +formState.inputValues.price)
+
+
+
+        )
+        ToastAndroid.showWithGravity('Product SuccessFully Created!!!',ToastAndroid.SHORT, ToastAndroid.CENTER)
+  
+      }
+            props.navigation.goBack()
+    } catch (err) {
+      setError(err.message)
     }
-
-    if (editedProducts) {
-      dispatch(productsActions.updateProduct(
-        productId,
-        formState.inputValues.title,
-        formState.inputValues.description,
-        formState.inputValues.imageUrl)
-
-      )
-    }
-    else {
-      dispatch(productsActions.createProduct(
-        formState.inputValues.title,
-        formState.inputValues.imageUrl,
-        formState.inputValues.description,
-        +formState.inputValues.price)
-
-
-
-      )
-    }
+    
+    setIsLoading(false)
     props.navigation.goBack();
 
-  }, [productId,dispatch, formState]);
+  }, [productId, dispatch, formState]);
 
   console.log(editedProducts)
 
@@ -209,9 +242,10 @@ const EditProductScreen = (props) => {
 
     let isValid = false
 
+
+
     if (InputValue.trim().length > 0) {
       isValid = true
-
     }
 
     dispatchFormState({
@@ -223,11 +257,12 @@ const EditProductScreen = (props) => {
     })
 
 
-  },[dispatchFormState])
+  }, [dispatchFormState])
 
   //=====================================================================
 
 
+  { console.log(props.InputValue) }
 
 
   useLayoutEffect(() => {
@@ -248,11 +283,18 @@ const EditProductScreen = (props) => {
   }, [props.navigation, submitHandler])
 
 
+  if (isLoading) {
+    return (<View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+      <ActivityIndicator size={'large'} color='green' />
+    </View>)
+  }
+
+
   return (
     <ScrollView>
       <View style={styles.form}>
 
-        <Input
+        {/* <Input
           id='Title'
           label="Title"
           errorText="Please enter valid title"
@@ -265,29 +307,48 @@ const EditProductScreen = (props) => {
           initialValid={!!editedProducts}
           required
 
-        />
+        /> */}
 
 
-        {/* <View style={styles.formControl}>
+        <View style={styles.formControl}>
           <Text style={styles.lable}>Title :</Text>
 
           <TextInput
             style={styles.input}
             value={formState.inputValues.title}
-            onChangeText={textChangeHandler.bind(this, 'title')}
+            onChangeText={onInputChangeHandler.bind(this, 'title')}
 
 
-            onEndEditing={() => console.log("onEndEditing properties Run...")}    // will fired when current line mathi biji koi line ma jaiye tyare
-            onSubmitEditing={() => console.log("onSubmiting properties Run...")}  // will fired when return button is clicked(means next button is clicked)
+          // onEndEditing={() => console.log("onEndEditing properties Run...")}    // will fired when current line mathi biji koi line ma jaiye tyare
+          // onSubmitEditing={() => console.log("onSubmiting properties Run...")}  // will fired when return button is clicked(means next button is clicked)
           />
           {!formState.inputValidities.title && <Text>Please enter valid title</Text>}
 
-          {!titleIsvalid && <Text>Please enter valid title</Text>}
+          {/* {!titleIsvalid && <Text>Please enter valid title</Text>} */}
 
-        </View> */}
+        </View>
 
-        <Input
-        id='Image Url'
+
+        <View style={styles.formControl}>
+          <Text style={styles.lable}>Image Url :</Text>
+
+          <TextInput
+            style={styles.input}
+            value={formState.inputValues.imageUrl}
+            onChangeText={onInputChangeHandler.bind(this, 'imageUrl')}
+
+
+          // onEndEditing={() => console.log("onEndEditing properties Run...")}    // will fired when current line mathi biji koi line ma jaiye tyare
+          // onSubmitEditing={() => console.log("onSubmiting properties Run...")}  // will fired when return button is clicked(means next button is clicked)
+          />
+          {!formState.inputValidities.imageUrl && <Text>Please enter valid title</Text>}
+
+          {/* {!titleIsvalid && <Text>Please enter valid title</Text>} */}
+
+        </View>
+
+        {/* <Input
+          id='Image Url'
           label="Image Url"
           errorText="Please enter valid Image Url"
           keyboardType='default'
@@ -298,28 +359,47 @@ const EditProductScreen = (props) => {
           initialValue={editedProducts? editedProducts.imageUrl:''}
           initialValid={!!editedProducts}
           required
-        />
+        /> */}
 
         {editedProducts ? null : (
 
-          <Input
-          id='Price'
-            label="Price"
-            errorText="Please enter valid Price"
-            keyboardType='decimal-pad'
-            autoCapitalize='sentences'
-            autoCorrect
-            returnKeyType='next'
-            onInputChange={onInputChangeHandler} 
-            // initialValue={editedProducts? editedProducts.title:''}   //No need
-            // initialValid={!!editedProducts}
-            required
-            min={0.1}
-          />
+          // <Input
+          // id='Price'
+          //   label="Price"
+          //   errorText="Please enter valid Price"
+          //   keyboardType='decimal-pad'
+          //   autoCapitalize='sentences'
+          //   autoCorrect
+          //   returnKeyType='next'
+          //   onInputChange={onInputChangeHandler} 
+          //   // initialValue={editedProducts? editedProducts.title:''}   //No need
+          //   // initialValid={!!editedProducts}
+          //   required
+          //   min={0.1}
+          // />
+
+
+          <View style={styles.formControl}>
+            <Text style={styles.lable}>Price :</Text>
+
+            <TextInput
+              style={styles.input}
+              value={formState.inputValues.price}
+              onChangeText={onInputChangeHandler.bind(this, 'price')}
+
+
+            // onEndEditing={() => console.log("onEndEditing properties Run...")}    // will fired when current line mathi biji koi line ma jaiye tyare
+            // onSubmitEditing={() => console.log("onSubmiting properties Run...")}  // will fired when return button is clicked(means next button is clicked)
+            />
+            {!formState.inputValidities.price && <Text>Please enter valid price</Text>}
+
+            {/* {!titleIsvalid && <Text>Please enter valid title</Text>} */}
+
+          </View>
 
         )}
 
-        <Input
+        {/* <Input
         id='Description'
           label="Description"
           errorText="Please enter valid Description"
@@ -334,7 +414,26 @@ const EditProductScreen = (props) => {
           initialValue={editedProducts? editedProducts.description:''}
           initialValid={!!editedProducts}
           required
-        />
+        /> */}
+
+
+        <View style={styles.formControl}>
+          <Text style={styles.lable}>Description :</Text>
+
+          <TextInput
+            style={styles.input}
+            value={formState.inputValues.description}
+            onChangeText={onInputChangeHandler.bind(this, 'description')}
+
+
+          // onEndEditing={() => console.log("onEndEditing properties Run...")}    // will fired when current line mathi biji koi line ma jaiye tyare
+          // onSubmitEditing={() => console.log("onSubmiting properties Run...")}  // will fired when return button is clicked(means next button is clicked)
+          />
+          {!formState.inputValidities.description && <Text>Please enter valid description</Text>}
+
+          {/* {!titleIsvalid && <Text>Please enter valid title</Text>} */}
+
+        </View>
 
       </View>
 
@@ -349,22 +448,22 @@ const styles = StyleSheet.create({
     margin: 20
   },
 
-  // formControl: {
-  //   marginVertical: 5,
-  //   marginHorizontal: 20
-  // },
+  formControl: {
+    marginVertical: 5,
+    marginHorizontal: 20
+  },
 
-  // lable: {
-  //   fontFamily: 'Sofia-Regular',
-  //   fontSize: 18,
-  //   color: '#FF8E8F'
-  // },
+  lable: {
+    fontFamily: 'Sofia-Regular',
+    fontSize: 18,
+    color: '#FF8E8F'
+  },
 
-  // input: {
-  //   borderBottomColor: 'black',
-  //   borderWidth: 1,
-  //   marginVertical: 3
-  // },
+  input: {
+    borderBottomColor: 'black',
+    borderWidth: 1,
+    marginVertical: 3
+  },
 
 })
 

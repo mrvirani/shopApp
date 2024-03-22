@@ -1,6 +1,6 @@
 import { StyleSheet, Text, View, Image } from 'react-native'
 import React, { useState } from 'react'
-// import { Image } from 'react-native-elements'
+
 
 const ImageItem = (props) => {
 
@@ -49,7 +49,7 @@ const ImageItem = (props) => {
                         style={styles.image}
                         // onLoadStart={() => onLoading(true)}
                         // onLoadEnd={() => onLoading(false)}
-                    />
+                       />
 
                 </View>
             ) : (

@@ -1,5 +1,5 @@
-import { StyleSheet, Text, View, Button, Image, TouchableOpacity } from 'react-native'
-import React from 'react'
+import { StyleSheet, Text, View, Button, Image, TouchableOpacity, ToastAndroid, ActivityIndicator } from 'react-native'
+import React, { useEffect, useState } from 'react'
 import { FlatList } from 'react-native-gesture-handler'
 import { useDispatch, useSelector } from 'react-redux'
 import MainButton from '../../components/MainButton'
@@ -10,7 +10,10 @@ import * as ordersActions from '../../store/actions/order'
 const CartScreens = (props) => {
 
 
+  const [isLoading, setIsLoading] = useState(false)
+
   const cartTotalAmount = useSelector(state => state.cart.TotalAmount)
+
   // console.log(cartTotalAmount)
 
   const cartItems = useSelector(state => {
@@ -32,7 +35,7 @@ const CartScreens = (props) => {
 
   }
 
- 
+
 
   )
   // console.log("jjhjhj"+cartItems)
@@ -43,27 +46,45 @@ const CartScreens = (props) => {
   const dispatch = useDispatch();
 
 
+
+
+
+
+
+  const sendorder = async () => {
+    setIsLoading(true)
+    await dispatch(ordersActions.addOrder(cartItems, cartTotalAmount))
+    setIsLoading(false)
+  }
+
+
+
+
+
   return (
     <View style={styles.screen}>
       <View style={styles.details}>
         <Text style={styles.text}>Total:<Text style={styles.amount}> $ {cartTotalAmount.toFixed(2)} </Text></Text>
-        <Button title="9090" onPress={()=>{
+        <Button title="9090" onPress={() => {
           (
-
             props.navigation.navigate('OrderScreen')
           )
         }
-          
-          
-          } />
-        <Button title="Order Now" disabled={cartItems.length === 0}
-        
-        onPress={()=>
-          dispatch(ordersActions.addOrder(cartItems,cartTotalAmount))
-          
-        }
 
-        />
+
+        } />
+
+        {isLoading ? (<ActivityIndicator color='red' size='large' />) : (
+
+          <Button title="Order Now" disabled={cartItems.length === 0}
+
+            onPress={() =>
+
+              sendorder()
+
+            } />
+
+        )}
       </View>
 
       <View style={styles.bottom}>
@@ -74,18 +95,18 @@ const CartScreens = (props) => {
         data={cartItems}
         renderItem={(itemData) => {
           return (
-            <TouchableOpacity activeOpacity={0.8} onPress={()=>
-              
-            {  dispatch(mainReducer.removeFromcart(itemData.item.productId))
-              
-              console.log(itemData.item.productTitle+" remove this item from cart")}}>
+            <TouchableOpacity activeOpacity={0.8} onPress={() => {
+              dispatch(mainReducer.removeFromcart(itemData.item.productId))
+
+              console.log(itemData.item.productTitle + " remove this item from cart")
+            }}>
 
               <View style={styles.container}>
                 <View>
                   <Image source={{ uri: itemData.item.productImage }} style={{ width: 50, height: 50 }} />
                 </View>
 
-                <View style={{  flexDirection: 'row', justifyContent: 'space-between', flex: 1 }}>
+                <View style={{ flexDirection: 'row', justifyContent: 'space-between', flex: 1 }}>
                   <View style={{ marginHorizontal: 20 }}>
                     <Text>{itemData.item.productTitle}</Text>
 
