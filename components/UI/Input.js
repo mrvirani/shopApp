@@ -1,8 +1,9 @@
-import { StyleSheet, Text, View } from 'react-native'
+import { StyleSheet, Text, View, TextInput } from 'react-native'
 import React, { useEffect, useReducer } from 'react'
-import { TextInput } from 'react-native-gesture-handler'
+// import { TextInput } from 'react-native-gesture-handler'
 
 import * as Animatable from 'react-native-animatable';
+
 
 const INPUT_CHANGE = 'INPUT_CHANGE'
 const INPUT_BLUR = 'INPUT_BLUR'
@@ -34,6 +35,17 @@ const inputReducer = (state, action) => {
 
 
 const Input = (props) => {
+
+
+  const { onInputChange,id} = props;
+
+  useEffect(()=>{
+    if(inputState.touched){
+        
+      onInputChange(id, inputState.value, inputState.isValid )   //onInputeChange is random name 
+    }
+  },[inputState, onInputChange, id])
+
  
   const [inputState, inputStateDispatch] = useReducer(inputReducer, {
 
@@ -43,14 +55,7 @@ const Input = (props) => {
   });
 
 
-  const { onInputChange} = props;
 
-  useEffect(()=>{
-    if(inputState.touched){
-        
-      onInputChange(inputState.value, inputState.isValid )   //onInputeChange is random name 
-    }
-  },[inputState, onInputChange])
 
 
   const textChangeHandler = (text) => {
@@ -85,14 +90,15 @@ const Input = (props) => {
   return (
     <View>
       <View style={styles.formControl}>
-        {console.log(props.lable)}
-        <Text style={styles.lable}>{props.lable}</Text>
+        {console.log(props.label)}
+        <Text style={styles.lable}>{props.label}</Text>
 
         <TextInput
           {...props}  // this one is need because we it's help to we can pass props inside componeents
           style={styles.input}
           value={inputState.value}
           onChangeText={textChangeHandler}
+          placeholder={props.placeholder}
           onBlur={lostFocusHandler}
           // onEndEditing={() => console.log("onEndEditing properties Run...")}    // will fired when current line mathi biji koi line ma jaiye tyare
           // onSubmitEditing={() => console.log("onSubmiting properties Run...")}  // will fired when return button is clicked(means next button is clicked)

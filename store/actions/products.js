@@ -10,7 +10,7 @@ export const UPDATE_PRODUCT = 'UPDATE_PRODUCT'
 export const SET_PRODUCT = 'SET_PRODUCT'
 
 export const fetchProduct = () => {
- 
+
     return async dispatch => {
 
 
@@ -35,15 +35,23 @@ export const fetchProduct = () => {
                 // }
             )
 
-            if (!response.ok) {   // when status code is not 200
-                throw new Error('Something went wrong!!![fetch Product]')
-            }
+
+          
 
             const resData = await response.json();
+
+            console.log(resData)
             const loadedProducts = []
 
+            console.log(response)
+            console.log(response.ok)
+
+            if (!response.ok) {   // when status code is not 200
+                throw new Error('Something went wrong!!!')
+            }
+
             for (const key in resData) {
-                loadedProducts.push(new Product(key, 'u1', resData[key].title, resData[key].description, resData[key].imageUrl, resData[key].price))
+                loadedProducts.push(new Product(key, 'u1', resData[key].title,  resData[key].imageUrl, resData[key].description, resData[key].price))
                 // console.log("title: " + resData[key].title)
                 // console.log("price: " + resData[key].price)
                 // console.log("imageUrl: " + resData[key].imageUrl)
@@ -51,15 +59,13 @@ export const fetchProduct = () => {
 
             }
 
-            console.log(response)
-            console.log(response.json)
 
             dispatch({ type: SET_PRODUCT, products: loadedProducts });
 
         } catch (err) {
             //here we do more - send to cutom analytics server 
             throw err
-        } 
+        }
 
 
     }
@@ -78,18 +84,18 @@ export const deleteProduct = productId => {
 
         })
 
+        if(!response.ok){
+            throw new Error('SomeThing went wrong')
+        }
+
 
         dispatch({ type: DELETE_PRODUCT, pid: productId })
     }
 
-    
-    if(!response.ok){
-        throw new Error('Something went wrong!!')
-    }
 
 }
 
-export const createProduct = (title, description, imageUrl, price) => {
+export const createProduct = (title, imageUrl, description, price) => {
 
     return async dispatch => {
 
@@ -104,8 +110,8 @@ export const createProduct = (title, description, imageUrl, price) => {
             },
             body: JSON.stringify({
                 title,
-                description,
                 imageUrl,
+                description,
                 price
             })
 
@@ -114,6 +120,10 @@ export const createProduct = (title, description, imageUrl, price) => {
         const resData = await response.json();
 
         console.log(resData)
+
+        if(!response.ok){
+            throw new Error('SomeThing went wrong')
+        }
 
 
         dispatch({
@@ -135,7 +145,7 @@ export const createProduct = (title, description, imageUrl, price) => {
 
 }
 
-export const updateProduct = (id, title, description, imageUrl) => {
+export const updateProduct = (id, title,imageUrl, description) => {
 
 
     return async  dispatch=>{
@@ -157,14 +167,14 @@ export const updateProduct = (id, title, description, imageUrl) => {
         })
 
         if(!response.ok){
-            throw new Error('SomeThing went wrong!!')
+            throw new Error('SomeThing went wrong')
         }
         
         dispatch({
            type: UPDATE_PRODUCT, pid: id, productData: {
                title: title,
-               description: description,
                imageUrl: imageUrl,
+               description: description,
                // price=price     // js feature is if properties and value have same name then you can pass direct value(Foe EXAMPLE we show above in createPRODUCT)
            }
        })  //// this will be coment because when we update any product then i ahve to not change price so....

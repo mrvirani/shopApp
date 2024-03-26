@@ -94,10 +94,7 @@ const OrderScreen = (props) => {
 
   return (
     <View>
-      <Text>Order Screen</Text>
-
-
-
+     
 
 
       <FlatList

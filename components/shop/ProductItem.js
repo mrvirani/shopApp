@@ -73,6 +73,7 @@ const ProductItem = (props) => {
                         style={{width: '100%', height: '60%', display: imageLoaded ? 'flex' : 'none'}}
                         onError={handleError}
                         onLoadEnd={handleImageLoad} 
+                        resizeMethod='cover'
                     />
                 
 
@@ -142,7 +143,6 @@ const styles = StyleSheet.create({
         margin: 20,
         overflow: 'hidden',
         backgroundColor: 'white'
-
     },
 
     image: {

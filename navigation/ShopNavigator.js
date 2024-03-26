@@ -31,18 +31,16 @@ import React from "react";
 import { Button } from 'react-native'
 
 import { createStackNavigator } from "@react-navigation/stack";
-
-import ProductOverviewScreen from "../screens/shop/ProductOverviewScreen";
-
-import ProductDetailsScreen from "../screens/shop/ProductDetailsScreen";
-import CartScreens from "../screens/shop/CartScreens";
-
-import OrderScreen from "../screens/shop/OrderScreen";
-
 import { createDrawerNavigator } from '@react-navigation/drawer';
 
+
+import ProductOverviewScreen from "../screens/shop/ProductOverviewScreen";
+import ProductDetailsScreen from "../screens/shop/ProductDetailsScreen";
 import UserProductScreen from "../screens/user/UserProductScreen";
 import EditProductScreen from "../screens/user/EditProductScreen";
+import CartScreens from "../screens/shop/CartScreens";
+import OrderScreen from "../screens/shop/OrderScreen";
+import AuthScreen from "../screens/user/AuthScreen";
 
 
 const DefaultStackNavigatorOptionsStyle ={
@@ -65,7 +63,8 @@ const ProductNavigator = ({navigation}) => {
             <Stack.Screen name="Add To cart" component={CartScreens}  />
             <Stack.Screen name="CartScreens" component={CartScreens} />
             <Stack.Screen name="OrderScreen" component={OrderScreen} />
-        </Stack.Navigator>)
+        </Stack.Navigator>
+        )
 }
 
 // screenOptions={{screenOptions:{headerStyle:{backgroundColor:'#FF*E*F'}}, headerTintColor:'white' }}
@@ -111,7 +110,28 @@ const MainDrawer = () => {
     )
 
 }
-export default MainDrawer;
+
+
+const AuthStackNavigator =  createStackNavigator()
+
+const AuthNavigator = () =>{
+    return(
+
+        <AuthStackNavigator.Navigator>
+            <AuthStackNavigator.Screen name="Auth"  component={AuthScreen}  options={{headerShown:false}}/>
+            <AuthStackNavigator.Screen name="Drawer" component={MainDrawer} />
+        </AuthStackNavigator.Navigator>
+    )
+}
+
+
+
+
+ 
+
+
+
+export default AuthNavigator;
 
 
 

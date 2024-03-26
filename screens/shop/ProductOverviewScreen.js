@@ -55,12 +55,12 @@ const ProductOverviewScreen = (props) => {
 
         async () => {
             console.log("hi")
+
             setError(null)
             console.log("hhhhh")
-            // setError(null)
             setIsLoding(true);
-            try {
 
+            try {
                 await dispatch(ProductActions.fetchProduct());  // await function will wait for this dispatch function done
             } catch (err) {
                 setError(err.message)
@@ -79,7 +79,7 @@ const ProductOverviewScreen = (props) => {
 
     //this useffect when run ==> After the components is launched
     useEffect(() => {    //event is willFocus didFocus willBlur didBlur 
-        const willFocusSub = props.navigation.addListener('willFocus', loadedProducts);
+        const willFocusSub = props.navigation.addListener('focus', loadedProducts);
 
         return () => {  // clean up function  // this component is destroyes and there we can clean up theat listner
             willFocusSub.remove()   //load products rebuilds
@@ -150,26 +150,9 @@ const ProductOverviewScreen = (props) => {
     })
 
 
-
-
-    // useEffect(()=>{
-    //     headerTitle:'hhhhh',
-    //     headerRight=()=>(
-    //         <HeaderButtons HeaderButtonComponent={HeaderButton}>
-    //             <Item title="cart" iconName='star' iconSize={20}
-    //             onPress={()=>{
-    //                 props.navigation.navigate('CartScreens')
-    //             }}
-    //             />
-    //         </HeaderButtons>
-    //     )
-
-
-    // },[])
-
-    if (error) {  //status code 200 nahi hoi tyare
+    if (error) {  //status code 200 nahi hoi tyare // =========================================================================
         return <View style={styles.indicator}>
-            <Text>An Error Ocured!!!</Text>
+            <Text>An Error Ocured!!! </Text>
             <Button title='try Again' onPress={loadedProducts} />
         </View>
     }
@@ -186,21 +169,6 @@ const ProductOverviewScreen = (props) => {
             <Text>No product is available.Please add first product!!!</Text>
         </View>
     }
-
-
-
-
-    // if (error) {
-    //     return(
-    //     <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-    //        <Text>An error Ocurred!</Text>
-    //        <MainButton  onPress={loadedProducts} >Try again</MainButton>
-    //     </View>
-
-    //     )
-    // }
-
-
 
 
     return (
@@ -232,25 +200,25 @@ const ProductOverviewScreen = (props) => {
                         {/* {console.log(itemData.item.imageUrl)} */}
 
                             
-            {/* <View style={{height:300, borderRadius:5, padding: 20, flex:1}}  >
+            {/* <View style={{height:300, borderRadius:5, padding: 20, flex:1}}  > */}
             
 
-                <ShimmerPlaceholder style={{width:"100%", height:"60%"}} shimmerColors={["#c0c0c0","#e7e8e9", "#c0c0c0"]} >
+                {/* <ShimmerPlaceholder style={{width:"100%", height:"60%"}} shimmerColors={["#c0c0c0","#e7e8e9", "#c0c0c0"]} >
 
                     
-                </ShimmerPlaceholder>
+                </ShimmerPlaceholder> */}
 
-                <ShimmerPlaceholder  style={{ alignItems: 'center',width:"100%",height: '20%'}} >
+                {/* <ShimmerPlaceholder  style={{ alignItems: 'center',width:"100%",height: '20%'}} > */}
 
-                <ShimmerPlaceholder  style={{ alignItems: 'center',height: '20%',marginTop: 10}} />
-                <ShimmerPlaceholder  style={{ alignItems: 'center',height: '20%',marginTop: 10}} />
+                {/* <ShimmerPlaceholder  style={{ alignItems: 'center',height: '20%',marginTop: 10}} />
+                <ShimmerPlaceholder  style={{ alignItems: 'center',height: '20%',marginTop: 10}} /> */}
 
-                </ShimmerPlaceholder>
-                
+                {/* </ShimmerPlaceholder>
+                 */}
 
                  
 
-            </View> */}
+            {/* </View> */}
 
                         <ProductItem
                             image={itemData.item.imageUrl}

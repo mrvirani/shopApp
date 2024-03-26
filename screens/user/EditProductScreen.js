@@ -309,7 +309,6 @@ const EditProductScreen = (props) => {
 
         /> */}
 
-
         <View style={styles.formControl}>
           <Text style={styles.lable}>Title :</Text>
 
