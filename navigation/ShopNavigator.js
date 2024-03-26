@@ -119,19 +119,14 @@ const AuthNavigator = () =>{
 
         <AuthStackNavigator.Navigator>
             <AuthStackNavigator.Screen name="Auth"  component={AuthScreen}  options={{headerShown:false}}/>
-            <AuthStackNavigator.Screen name="Drawer" component={MainDrawer} />
+            <AuthStackNavigator.Screen name="Drawer" component={MainDrawer}  options={{headerShown:false}}/>
         </AuthStackNavigator.Navigator>
     )
 }
 
 
 
-
- 
-
-
-
-export default AuthNavigator;
+export default MainDrawer;
 
 
 

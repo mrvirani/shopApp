@@ -170,7 +170,7 @@ const EditProductScreen = (props) => {
     }
     
     setIsLoading(false)
-    props.navigation.goBack();
+    
 
   }, [productId, dispatch, formState]);
 

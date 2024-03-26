@@ -84,6 +84,8 @@ export const deleteProduct = productId => {
 
         })
 
+        console.log(response)
+
         if(!response.ok){
             throw new Error('SomeThing went wrong')
         }
