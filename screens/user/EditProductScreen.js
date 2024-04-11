@@ -73,8 +73,9 @@ const EditProductScreen = (props) => {
 
   // console.log(prodId + "" + productId)
 
-  const editedProducts = useSelector(state => state.products.userProducts.find(prod => prod.id === productId))
+  const editedProducts = useSelector(state => state.products.userProducts.find(prod => prod.id === prodId))
 
+  //  console.log("hjkhdjkfhjkhe"+JSON.stringify(editedProducts))
 
   // const [title, setTitle] = useState(editedProducts ? editedProducts.title : '')
   // const [imageUrl, setImageUrl] = useState(editedProducts ? editedProducts.imageUrl : '')
@@ -106,7 +107,6 @@ const EditProductScreen = (props) => {
       imageUrl: editedProducts ? true : false,
       price: editedProducts ? true : false,  //ignore price because we not edit price
       description: editedProducts ? true : false
-
     },
     formIsValid: editedProducts ? true : false
 
@@ -116,12 +116,15 @@ const EditProductScreen = (props) => {
 
   })
 
+  console.log("input values: ", formState.inputValues)
+  console.log("input Validities: ", formState.inputValidities)
 
-  useEffect(()=>{
-      if(error){
-        Alert.alert('An Error Occured', error, [{text:'Okay'}])
-      }
-  },[error])
+
+  useEffect(() => {
+    if (error) {
+      Alert.alert('An Error Occured', error, [{ text: 'Okay' }])
+    }
+  }, [error])
 
 
   //==================================================================
@@ -130,8 +133,8 @@ const EditProductScreen = (props) => {
 
     // if (!formState.inputValues.title || !formState.inputValues.imageUrl || !formState.inputValues.description || !formState.inputValues.price) {
 
-    // if (!formState.formIsValid) {
-    //  Alert.alert("Wrong Input!!", "Please check all data is correctly fill or not...", [{ text: 'okay' }])
+    // if (!formState.inputValues.title || !formState.inputValues.imageUrl || !formState.inputValues.price || !formState.inputValues.description) {
+    //   Alert.alert("Wrong Input!!", "Please check all data is correctly fill or not...", [{ text: 'okay' }])
     //   return
     // }
 
@@ -148,8 +151,8 @@ const EditProductScreen = (props) => {
           formState.inputValues.imageUrl)
 
         )
-        ToastAndroid.showWithGravity('Data SuccessFully Updated!!!',ToastAndroid.SHORT, ToastAndroid.CENTER)
-  
+        ToastAndroid.showWithGravity('Data SuccessFully Updated!!!', ToastAndroid.SHORT, ToastAndroid.CENTER)
+
       }
       else {
         await dispatch(productsActions.createProduct(
@@ -161,20 +164,21 @@ const EditProductScreen = (props) => {
 
 
         )
-        ToastAndroid.showWithGravity('Product SuccessFully Created!!!',ToastAndroid.SHORT, ToastAndroid.CENTER)
-  
+        ToastAndroid.showWithGravity('Product SuccessFully Created!!!', ToastAndroid.SHORT, ToastAndroid.CENTER)
+
       }
-            props.navigation.goBack()
+      props.navigation.goBack()
     } catch (err) {
       setError(err.message)
     }
-    
+
+    props.navigation.goBack();
     setIsLoading(false)
-    
 
-  }, [productId, dispatch, formState]);
 
-  console.log(editedProducts)
+  }, [productId, dispatch, formState.inputValues.title, formState.inputValues.imageUrl, formState.inputValues.price, formState.inputValues.description]);
+
+  // console.log("helloo    :"+ JSON.stringify(editedProducts))
 
   //=====================================================
 
@@ -244,12 +248,12 @@ const EditProductScreen = (props) => {
 
 
 
-    if (InputValue.trim().length > 0) {
+    if (InputValue.length > 0) {
       isValid = true
     }
 
     dispatchFormState({
-      type: 'FORM_INPUT_UPDATE',
+      type: FORM_INPUT_UPDATE,
       value: InputValue,
       isValid: InputValidities,
       // input:'title' // here title is key and this should be a key which you also have inside of youre state, like initial state
@@ -257,12 +261,14 @@ const EditProductScreen = (props) => {
     })
 
 
+
+
   }, [dispatchFormState])
 
   //=====================================================================
 
 
-  { console.log(props.InputValue) }
+  // { console.log(props.InputValue) }
 
 
   useLayoutEffect(() => {
@@ -309,6 +315,7 @@ const EditProductScreen = (props) => {
 
         /> */}
 
+
         <View style={styles.formControl}>
           <Text style={styles.lable}>Title :</Text>
 
@@ -316,10 +323,12 @@ const EditProductScreen = (props) => {
             style={styles.input}
             value={formState.inputValues.title}
             onChangeText={onInputChangeHandler.bind(this, 'title')}
+           
 
 
-          // onEndEditing={() => console.log("onEndEditing properties Run...")}    // will fired when current line mathi biji koi line ma jaiye tyare
-          // onSubmitEditing={() => console.log("onSubmiting properties Run...")}  // will fired when return button is clicked(means next button is clicked)
+            // onEndEditing={() => console.log("onEndEditing properties Run...")}    // will fired when current line mathi biji koi line ma jaiye tyare
+            // onSubmitEditing={() => console.log("onSubmiting properties Run...")}  // will fired when return button is clicked(means next button is clicked)
+
           />
           {!formState.inputValidities.title && <Text>Please enter valid title</Text>}
 
@@ -335,10 +344,12 @@ const EditProductScreen = (props) => {
             style={styles.input}
             value={formState.inputValues.imageUrl}
             onChangeText={onInputChangeHandler.bind(this, 'imageUrl')}
+            
 
 
-          // onEndEditing={() => console.log("onEndEditing properties Run...")}    // will fired when current line mathi biji koi line ma jaiye tyare
-          // onSubmitEditing={() => console.log("onSubmiting properties Run...")}  // will fired when return button is clicked(means next button is clicked)
+            // onEndEditing={() => console.log("onEndEditing properties Run...")}    // will fired when current line mathi biji koi line ma jaiye tyare
+            // onSubmitEditing={() => console.log("onSubmiting properties Run...")}  // will fired when return button is clicked(means next button is clicked)
+
           />
           {!formState.inputValidities.imageUrl && <Text>Please enter valid title</Text>}
 
@@ -409,7 +420,7 @@ const EditProductScreen = (props) => {
           returnKeyType='next'
           // multiline
           // numberOfLines={3}
-          onInputChangeHandler={onInputChangeHandler}
+          onInputChange={onInputChangeHandler}
           initialValue={editedProducts? editedProducts.description:''}
           initialValid={!!editedProducts}
           required
@@ -425,8 +436,9 @@ const EditProductScreen = (props) => {
             onChangeText={onInputChangeHandler.bind(this, 'description')}
 
 
-          // onEndEditing={() => console.log("onEndEditing properties Run...")}    // will fired when current line mathi biji koi line ma jaiye tyare
-          // onSubmitEditing={() => console.log("onSubmiting properties Run...")}  // will fired when return button is clicked(means next button is clicked)
+            // onEndEditing={() => console.log("onEndEditing properties Run...")}    // will fired when current line mathi biji koi line ma jaiye tyare
+            // onSubmitEditing={() => console.log("onSubmiting properties Run...")}  // will fired when return button is clicked(means next button is clicked)
+
           />
           {!formState.inputValidities.description && <Text>Please enter valid description</Text>}
 

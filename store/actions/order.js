@@ -13,11 +13,14 @@ export const addOrder = (cartItems, totalAmount) => {
 
 
 
-        return async dispatch => {
+        return async (dispatch,getState) => {
+
+                const token = getState().auth.token
+                const userId = getState().auth.userId
 
                 const date = new Date()
 
-                const response = await fetch('https://shopapp-18e5a-default-rtdb.firebaseio.com/orders/u1.json', {
+                const response = await fetch(`https://shopapp-18e5a-default-rtdb.firebaseio.com/orders/${userId}.json?auth=${token}`, {
                         method: 'POST',
                         headers: {
                                 'Content-Type': 'application/json'
@@ -57,12 +60,14 @@ export const addOrder = (cartItems, totalAmount) => {
 export const fetchOrder =()=>{
 
         
-        return async dispatch =>{
+        return async (dispatch,getState) =>{
                 //any asyc code you can write here
 
                 try{
 
-                        const response = await fetch('https://shopapp-18e5a-default-rtdb.firebaseio.com/orders/u1.json'
+                        const userId = getState().auth.userId;
+
+                        const response = await fetch(`https://shopapp-18e5a-default-rtdb.firebaseio.com/orders/${userId}.json`
                         )
         
                         if(!response.ok){
@@ -77,10 +82,7 @@ export const fetchOrder =()=>{
                                 loadedOrders.push(new Order(key,resData[key].cartItems, resData[key].totalAmount, new Date(resData[key].date)))
                         }
 
-                    
-        
-        
-        
+                        
                         dispatch({ type:SET_ORDER, orders:loadedOrders})
                         
                 }catch(err){

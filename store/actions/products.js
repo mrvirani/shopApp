@@ -11,12 +11,14 @@ export const SET_PRODUCT = 'SET_PRODUCT'
 
 export const fetchProduct = () => {
 
-    return async dispatch => {
+    return async (dispatch,getState) => {
 
 
         //any asyc code you can want...
-
+        const userId = getState().auth.userId;
+        console.log(userId);
         try {
+
 
             //here use of fetch to not only fetching or get data but but we can also get, post, put, delete any kind of request send
             const response = await fetch('https://shopapp-18e5a-default-rtdb.firebaseio.com/Products.json'
@@ -40,18 +42,18 @@ export const fetchProduct = () => {
 
             const resData = await response.json();
 
-            console.log(resData)
+            console.log("fetch data product",resData)
             const loadedProducts = []
 
-            console.log(response)
-            console.log(response.ok)
+            // console.log(response)
+            // console.log(response.ok)
 
             if (!response.ok) {   // when status code is not 200
                 throw new Error('Something went wrong!!!')
             }
 
             for (const key in resData) {
-                loadedProducts.push(new Product(key, 'u1', resData[key].title,  resData[key].imageUrl, resData[key].description, resData[key].price))
+                loadedProducts.push(new Product(key, resData[key].ownerId, resData[key].title,  resData[key].imageUrl, resData[key].description, resData[key].price))
                 // console.log("title: " + resData[key].title)
                 // console.log("price: " + resData[key].price)
                 // console.log("imageUrl: " + resData[key].imageUrl)
@@ -60,7 +62,10 @@ export const fetchProduct = () => {
             }
 
 
-            dispatch({ type: SET_PRODUCT, products: loadedProducts });
+            dispatch({
+                type: SET_PRODUCT,
+                products: loadedProducts,
+                UserProducts: loadedProducts.filter(prod => prod.ownerId === userId) });
 
         } catch (err) {
             //here we do more - send to cutom analytics server 
@@ -76,15 +81,17 @@ export const deleteProduct = productId => {
 
 
 
-    return async dispatch => {
+    return async (dispatch,getState) => {
+
+        const token = getState().auth.token;
 
         //here use of fetch to not only fetching or get data but but we can also get, post, put, delete any kind of request send
-        const response = await fetch(`https://shopapp-18e5a-default-rtdb.firebaseio.com/Products/${productId}.json`, {
+        const response = await fetch(`https://shopapp-18e5a-default-rtdb.firebaseio.com/Products/${productId}.json?auth=${token}`, {
             method: 'DELETE',
 
         })
 
-        console.log(response)
+        // console.log(response)
 
         if(!response.ok){
             throw new Error('SomeThing went wrong')
@@ -99,13 +106,18 @@ export const deleteProduct = productId => {
 
 export const createProduct = (title, imageUrl, description, price) => {
 
-    return async dispatch => {
+    return async (dispatch,getState) => {
 
+        
+            const token = getState().auth.token
+            const userId = getState().auth.userId
+
+           
 
         //any asyc code you can want...
 
         //here use of fetch to not only fetching or get data but but we can also get, post, put, delete any kind of request send
-        const response = await fetch('https://shopapp-18e5a-default-rtdb.firebaseio.com/Products.json', {
+        const response = await fetch(`https://shopapp-18e5a-default-rtdb.firebaseio.com/Products.json?auth=${token}`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -114,17 +126,18 @@ export const createProduct = (title, imageUrl, description, price) => {
                 title,
                 imageUrl,
                 description,
-                price
+                price,
+                ownerId: userId
             })
 
         })
 
         const resData = await response.json();
 
-        console.log(resData)
+        console.log("create product ",resData)
 
         if(!response.ok){
-            throw new Error('SomeThing went wrong')
+            throw new Error('SomeThing went wrong  mmmmmmmm')
         }
 
 
@@ -135,6 +148,7 @@ export const createProduct = (title, imageUrl, description, price) => {
                 description,
                 imageUrl,
                 price,
+                ownerId:userId
 
             }
         })
@@ -150,10 +164,13 @@ export const createProduct = (title, imageUrl, description, price) => {
 export const updateProduct = (id, title,imageUrl, description) => {
 
 
-    return async  dispatch=>{
+    return async  (dispatch,getState)=>{
 
+        // console.log("whole data of users : "+getState)  // anathi complete data malse redux store no je usethi 
 
-       const response =  await fetch(`https://shopapp-18e5a-default-rtdb.firebaseio.com/Products/${id}.json`, {
+        const token = getState().auth.token
+
+       const response =  await fetch(`https://shopapp-18e5a-default-rtdb.firebaseio.com/Products/${id}.json?auth=${token}`, {
             method: 'PATCH',
             headers: {
                 'Content-Type': 'application/json'

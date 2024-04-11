@@ -150,12 +150,7 @@ const ProductOverviewScreen = (props) => {
     })
 
 
-    if (error) {  //status code 200 nahi hoi tyare // =========================================================================
-        return <View style={styles.indicator}>
-            <Text>An Error Ocured!!! </Text>
-            <Button title='try Again' onPress={loadedProducts} />
-        </View>
-    }
+   
 
 
     // if (isLoding) {   // data fetch thata time lage tyare
@@ -223,7 +218,7 @@ const ProductOverviewScreen = (props) => {
                         <ProductItem
                             image={itemData.item.imageUrl}
                             title={itemData.item.title}
-                            price={itemData.item.price}
+                            price={itemData.item.price} 
                             onSelectCard={() => { selectItemHandler(itemData.item.id, itemData.item.title) }}  //itemData.id point out model's single product and it's id we have to shere on next screen
                         // onAddToCartScreen={() => {
                         //     // console.log(itemData.item)

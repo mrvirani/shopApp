@@ -3,23 +3,25 @@ import Product from '../../models/product';
 import { CREATE_PRODUCT, DELETE_PRODUCT, SET_PRODUCT, UPDATE_PRODUCT } from '../actions/products';
 
 const initialState = {
-    availableProducts: PRODUCTS,
-    userProducts: PRODUCTS.filter(prod=> prod.ownerId ==='u1')
+    availableProducts: [],
+    userProducts: [] // this is we updated in action alredy
 };
 
 export default  (state= initialState,action)=> {
    
    switch(action.type){
 
-    case SET_PRODUCT:
+    case SET_PRODUCT:  
 
 
+    console.log("product data",state)
         return{
             
             availableProducts: action.products,
-            userProducts: action.products.filter(prod=> prod.ownerId ==='u1')
+            userProducts: action.UserProducts
             
         }
+
 
 
     case DELETE_PRODUCT: // for delete product we have it delete from userOwerview Screen , userProduct SCrren and also from cart screen (for cart screen we go on cart reducer)
@@ -35,7 +37,7 @@ export default  (state= initialState,action)=> {
 
         const newProduct = new Product(
             action.productData.id,
-             'u1', 
+             action.productData.ownerId, 
              action.productData.title, 
              action.productData.imageUrl,
              action.productData.description,
@@ -55,7 +57,7 @@ export default  (state= initialState,action)=> {
         const productIndex= state.userProducts.findIndex(prod => prod.id === action.pid)
 
 
-        console.log("jhjhjh"+productIndex)
+        // console.log("jhjhjh"+productIndex)
         const updatedproduct = new Product(
             action.pid,
             state.userProducts[productIndex].ownerId,   //In which place i have use state. somthing then it,s i have place same value as it is(value not changed)

@@ -7,23 +7,24 @@ import * as Animatable from 'react-native-animatable';
 
 const INPUT_CHANGE = 'INPUT_CHANGE'
 const INPUT_BLUR = 'INPUT_BLUR'
+const LOGOUT = 'LOGOUT'
 
 const inputReducer = (state, action) => {
 
   switch (action.type) {
     case INPUT_CHANGE:
-       return {
+      return {
         ...state,
-         value:action.value,
-         isValid:action.isValid,
+        value: action.value,
+        isValid: action.isValid,
 
-       };
+      };
 
-       case INPUT_BLUR:
-        return {
-          ...state,
-          touched:true
-        }
+    case INPUT_BLUR:
+      return {
+        ...state,
+        touched: true
+      }
 
 
 
@@ -37,16 +38,12 @@ const inputReducer = (state, action) => {
 const Input = (props) => {
 
 
-  const { onInputChange,id} = props;
+  const { onInputChange, id } = props;
 
-  useEffect(()=>{
-    if(inputState.touched){
-        
-      onInputChange(id, inputState.value, inputState.isValid )   //onInputeChange is random name 
-    }
-  },[inputState, onInputChange, id])
 
- 
+  console.log(id + "idkllklkl")
+
+
   const [inputState, inputStateDispatch] = useReducer(inputReducer, {
 
     value: props.initialValue ? props.initialValue : '',
@@ -55,11 +52,17 @@ const Input = (props) => {
   });
 
 
+  useEffect(() => {
+    if (inputState.touched) {
+
+      onInputChange(id, inputState.value, inputState.isValid)   //onInputeChange is random name 
+    }
+  }, [inputState, onInputChange, id])
 
 
 
   const textChangeHandler = (text) => {
-
+    console.log('textchange hab');
     const emailRegex = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
     let isValid = true;
     if (props.required && text.trim().length === 0) {
@@ -67,7 +70,7 @@ const Input = (props) => {
     }
     if (props.email && !emailRegex.test(text.toLowerCase())) {
       isValid = false;
-    }  
+    }
     if (props.min != null && +text < props.min) {
       isValid = false;
     }
@@ -77,20 +80,21 @@ const Input = (props) => {
     if (props.minLength != null && text.length < props.minLength) {
       isValid = false;
     }
-
-    inputStateDispatch({ type: INPUT_CHANGE, value: text, isValid:isValid })
+    console.log("text", isValid)
+    inputStateDispatch({ type: INPUT_CHANGE, value: text, isValid: isValid })
+    // onInputChange(text, isValid)
 
   }
 
 
   const lostFocusHandler = () => {
-     inputStateDispatch({type: INPUT_BLUR })
+    inputStateDispatch({ type: INPUT_BLUR })
   }
 
   return (
     <View>
       <View style={styles.formControl}>
-        {console.log(props.label)}
+        {/* {console.log(props.label)} */}
         <Text style={styles.lable}>{props.label}</Text>
 
         <TextInput
@@ -100,10 +104,17 @@ const Input = (props) => {
           onChangeText={textChangeHandler}
           placeholder={props.placeholder}
           onBlur={lostFocusHandler}
-          // onEndEditing={() => console.log("onEndEditing properties Run...")}    // will fired when current line mathi biji koi line ma jaiye tyare
-          // onSubmitEditing={() => console.log("onSubmiting properties Run...")}  // will fired when return button is clicked(means next button is clicked)
+        // onEndEditing={() => console.log("onEndEditing properties Run...")}    // will fired when current line mathi biji koi line ma jaiye tyare
+        // onSubmitEditing={() => console.log("onSubmiting properties Run...")}  // will fired when return button is clicked(means next button is clicked)
         />
-        {!inputState.isValid && <Text>{props.errorText}</Text>}
+
+        {!inputState.isValid && inputState.touched && (
+          <View style={styles.errorContainer}>
+            <Text style={styles.errorText}>{props.errorText}</Text>
+          </View>
+        )}
+
+        {/* {!inputState.isValid && <Text>{props.errorText}</Text>} */}
 
         {/* {!titleIsvalid && <Text>Please enter valid title</Text>} */}
 
@@ -119,7 +130,7 @@ const styles = StyleSheet.create({
   // },
 
   formControl: {
-    width:'100%',  
+    width: '100%',
   },
 
   lable: {
@@ -135,6 +146,11 @@ const styles = StyleSheet.create({
     paddingVertical: 5,
     // marginVertical: 1
   },
+
+  errorText: {
+    color: 'red',
+    fontSize: 13
+  }
 
 
 })

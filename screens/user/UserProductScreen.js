@@ -37,6 +37,7 @@ const UserProductScreen = (props) => {
   }, [])
   
   const userProducts = useSelector(state => state.products.userProducts)
+  console.log("userProducts::::"+JSON.stringify(userProducts))
   
   const dispatch = useDispatch()
 
@@ -49,6 +50,17 @@ const UserProductScreen = (props) => {
       {text:'No', style:'default'},
       {text:'Yes', style:'destructive', onPress:()=>{ dispatch(productsActions.deleteProduct(id)) }} 
     ])
+  }
+
+
+
+  if(userProducts.length === 0){
+    <View style={{flex:1, alignItems:'center', justifyContent:'center'}}>
+      <Text>
+      Product is not found, maybe start creacting some?
+      </Text>
+    </View>
+    // Alert.alert("Product is Not Found, maybe start creacting some?")
   }
 
 

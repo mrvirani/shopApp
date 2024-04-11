@@ -81,13 +81,12 @@ const AuthScreen = (props) => {
 
     const authHandler = async () => {
 
-
-
+        
         // console.log("email:" + formState.inputValues.email)
         // console.log("password:" + formState.inputValues.password)
 
 
-        // if (!formState.formIsValid) {
+        // if (!formState.inputValidities.email || !formState.inputValidities.password) {
         //     // Show an error message if form is invalid
         //     ToastAndroid.showWithGravity("Please check your inputs", ToastAndroid.SHORT, ToastAndroid.BOTTOM);
         //     return;
@@ -100,29 +99,47 @@ const AuthScreen = (props) => {
         console.log("EMAIL:" + Email)
         console.log("PASSWORD:" + password)
 
-       // dispatch(AuthAction.signUp(Email, password))
-        ToastAndroid.showWithGravity("button is pressed", ToastAndroid.BOTTOM, ToastAndroid.show)
+        if(dispatch(AuthAction.signUp(Email, password))){
+            ToastAndroid.showWithGravity("button is pressed", ToastAndroid.BOTTOM, ToastAndroid.show)
 
 
-        let action;
+        // let action;
 
-        {isSignUp?
-             (action=  AuthAction.signUp(Email, password)):
-                (action=  AuthAction.login(Email, password))
-        }
+        // {isSignUp?
+        //      (action=  AuthAction.signUp(Email, password)):
+        //         (action=  AuthAction.login(Email, password))
+        // }
 
-        setError(null)
-        setIsLoding(true)
-        try{
-            dispatch(action)
+        // setError(null)
+        // setIsLoding(true)
+        // try{
+        //     dispatch(action)
+        //     props.navigation.navigate('Drawer')
+        // }
+        // catch(err){
+        //     setError(err.message)
+        // }
+        // setIsLoding(false)
             props.navigation.navigate('Drawer')
         }
-        catch(err){
-            setError(err.message)
-        }
-        setIsLoding(false)
+        ToastAndroid.showWithGravity("button is pressed", ToastAndroid.BOTTOM, ToastAndroid.show)
 
-       
+        // let Action;
+
+        // if (isSignUp) {
+
+        //     // Action = AuthAction.signUp(
+        //     //     formState.inputValues.email,
+        //     //     formState.inputValues.password)
+        //     Action=  AuthAction.signUp(Email, password)
+        // }
+        // else {
+        //     // Action = AuthAction.login(
+        //     //     formState.inputValues.email,
+        //     //     formState.inputValues.password)
+        //     Action= AuthAction.login(Email, password)
+
+        // }
 
         // setError(null)
         // setIsLoding(true)
@@ -207,7 +224,7 @@ const AuthScreen = (props) => {
                                 <Text style={styles.title}>LOGIN</Text>
 
 
-                                <Input
+                                {/* <Input
                                     id='email'
                                     label="E-mail"
                                     errorText="In-valid email"
@@ -215,11 +232,12 @@ const AuthScreen = (props) => {
                                     required
                                     email
                                     autoCapitalize='none'
+                                    errorMessage="Please enter a valid email address"
                                     value={Email}
                                     onInputChange={(text)=>setEmail(text)}
                                     initialValue=""
-                                /> 
-                                 <Input
+                                /> */}
+                                {/* <Input
                                     id='password'
                                     label="Password"
                                     errorText="in valid password"
@@ -228,13 +246,14 @@ const AuthScreen = (props) => {
                                     required
                                     minLength={5}
                                     autoCapitalize='none'
+                                    errorMessage="Please enter a valid password"
                                     value={password}
-                                    onChangeText={(text) => setPassword(text)}
+                                    onInputChange={(text)=>{setPassword(text)}}
                                     initialValue=""
-                                />
+                                /> */}
 
 
-                                {/* <View>
+                                <View>
                                     <Text>Email</Text>
                                     <TextInput
                                         value={Email}
@@ -259,7 +278,7 @@ const AuthScreen = (props) => {
                                         borderColor='black'
                                         style={{ borderWidth: 1 }}
                                     />
-                                </View> */}
+                                </View>
 
 
 
@@ -400,3 +419,7 @@ export default AuthScreen
 
 
 
+
+
+
+// running code data save in firebase

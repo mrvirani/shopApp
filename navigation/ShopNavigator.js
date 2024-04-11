@@ -31,7 +31,7 @@ import React from "react";
 import { Button } from 'react-native'
 
 import { createStackNavigator } from "@react-navigation/stack";
-import { createDrawerNavigator } from '@react-navigation/drawer';
+import { DrawerContentScrollView, DrawerItem, DrawerItemList, createDrawerNavigator } from '@react-navigation/drawer';
 
 
 import ProductOverviewScreen from "../screens/shop/ProductOverviewScreen";
@@ -41,30 +41,40 @@ import EditProductScreen from "../screens/user/EditProductScreen";
 import CartScreens from "../screens/shop/CartScreens";
 import OrderScreen from "../screens/shop/OrderScreen";
 import AuthScreen from "../screens/user/AuthScreen";
+import StartUpScreen from "../screens/StartUpScreen";
+
+import * as AuthActions from "../store/actions/auth"
+import { useDispatch } from "react-redux";
+// import { createAppContainer } from "react-navigation";
 
 
-const DefaultStackNavigatorOptionsStyle ={
-        headerStyle:{
-            backgroundColor:'#FF8E8F'
-        },
-        headerTintStyle:{
-            fontFamily:'Quando-Regular'
-        },
-        headerTintColor:'white'
+
+
+const DefaultStackNavigatorOptionsStyle = {
+    headerStyle: {
+        backgroundColor: '#FF8E8F'
+    },
+    headerTintStyle: {
+        fontFamily: 'Quando-Regular'
+    },
+    headerTintColor: 'white'
 }
 
 const Stack = createStackNavigator()
-const ProductNavigator = ({navigation}) => {
+const ProductNavigator = ({ navigation }) => {
+
+
     return (
 
         <Stack.Navigator screenOptions={DefaultStackNavigatorOptionsStyle}>
-            <Stack.Screen name="Product Overview" component={ProductOverviewScreen}           />
+            <Stack.Screen name="Product Overview" component={ProductOverviewScreen} />
             <Stack.Screen name="Product Detail" component={ProductDetailsScreen} />
-            <Stack.Screen name="Add To cart" component={CartScreens}  />
+            <Stack.Screen name="Add To cart" component={CartScreens} />
             <Stack.Screen name="CartScreens" component={CartScreens} />
             <Stack.Screen name="OrderScreen" component={OrderScreen} />
         </Stack.Navigator>
-        )
+
+    )
 }
 
 // screenOptions={{screenOptions:{headerStyle:{backgroundColor:'#FF*E*F'}}, headerTintColor:'white' }}
@@ -91,47 +101,71 @@ const Drawer = createDrawerNavigator()
 
 const MainDrawer = () => {
 
-    return(
 
-    <Drawer.Navigator screenOptions={DefaultStackNavigatorOptionsStyle}>
-        <Drawer.Screen name="Home" component={ProductNavigator} options={{
-            title:'OverView Screen',
-            // headerStyle:{
-            //     backgroundColor:'#FF8E8F',
-            // },
-            // headerTintColor:'white',
-            headerShown:false
-            
-        }}/>
-        <Drawer.Screen name="Your Orders" component={OrderNavigator}  options={{headerShown:false}}/>
-        <Drawer.Screen name="Admin" component={AdminNavigator} options={{headerShown:false}} />
-    </Drawer.Navigator>
+    return (
+
+        <Drawer.Navigator screenOptions={DefaultStackNavigatorOptionsStyle}
+
+            drawerContent={props => <CustomDrawerContent {...props} />}>
+                
+            <Drawer.Screen name="Home" component={ProductNavigator} options={{
+                title: 'OverView Screen',
+                // headerStyle:{
+                //     backgroundColor:'#FF8E8F',
+                // },
+                // headerTintColor:'white',
+                headerShown: false,
+
+            }}
+
+
+            />
+            <Drawer.Screen name="Your Orders" component={OrderNavigator} options={{ headerShown: false }} />
+            <Drawer.Screen name="Admin" component={AdminNavigator} options={{ headerShown: false }} />
+        </Drawer.Navigator>
 
     )
 
 }
 
+const CustomDrawerContent = (props) => {
 
-const AuthStackNavigator =  createStackNavigator()
+    const dispatch = useDispatch();
 
-const AuthNavigator = () =>{
-    return(
+    return (
+        //safe area pan chalse
+        <DrawerContentScrollView {...props}>  
+            <DrawerItemList {...props} />
+            <DrawerItem
+                label="Logout"
+                onPress={() => {
+                    dispatch(AuthActions.logOut())
+                    props.navigation.navigate('Auth')
+
+                }}
+            />
+        </DrawerContentScrollView>
+    );
+};
+
+
+const AuthStackNavigator = createStackNavigator()
+
+const AuthNavigator = () => {
+    return (
 
         <AuthStackNavigator.Navigator>
-            <AuthStackNavigator.Screen name="Auth"  component={AuthScreen}  options={{headerShown:false}}/>
-            <AuthStackNavigator.Screen name="Drawer" component={MainDrawer}  options={{headerShown:false}}/>
+            <AuthStackNavigator.Screen name="StartUp" component={StartUpScreen} options={{ headerShown: false }} />
+            <AuthStackNavigator.Screen name="Auth" component={AuthScreen} options={{ headerShown: false }} />
+            <AuthStackNavigator.Screen name="Drawer" component={MainDrawer} options={{ headerShown: false }} />
+
         </AuthStackNavigator.Navigator>
     )
 }
 
 
 
-export default MainDrawer;
-
-
-
-
-
+export default AuthNavigator ;
 
 
 

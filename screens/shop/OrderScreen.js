@@ -1,4 +1,4 @@
-import { ActivityIndicator, Button, StyleSheet, Text, View } from 'react-native'
+import { ActivityIndicator, Alert, Button, StyleSheet, Text, View } from 'react-native'
 import React, { useCallback, useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { FlatList } from 'react-native-gesture-handler'
@@ -88,14 +88,21 @@ const OrderScreen = (props) => {
   }
 
 
+  if (orders.length === 0) {
+    <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+      <Text>
+        order is Not Found, maybe start ordering some orders?
+      </Text>
+    </View>
+    //Alert.alert("order is Not Found, maybe start ordering some orders?")
+  }
+
 
 
 
 
   return (
     <View>
-     
-
 
       <FlatList
         data={orders}
